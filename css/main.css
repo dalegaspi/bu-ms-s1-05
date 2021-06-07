@@ -1,0 +1,126 @@
+/*!
+ * main.css
+ * dlegaspi@bu.edu
+ */
+
+@font-face {
+    font-family: Whitney-Book;
+    src: url(../fonts/whitneybook.otf);
+}
+
+@font-face {
+    font-family: Whitney-SemiBold;
+    src: url(../fonts/whitneysemibold.otf);
+}
+
+@font-face {
+    font-family: Whitney-Bold;
+    src: url(../fonts/whitneybold.otf);
+}
+
+@font-face {
+    font-family: Whitney-Medium;
+    src: url(../fonts/whitneymedium.otf);
+}
+
+@font-face {
+    font-family: Whitney-SSM;
+    src: url(../fonts/WhitneySSmMedium.ttf);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Whitney-Book, Benton, sans-serif;
+    line-height: 1.6;
+}
+
+table.flat-table {
+    border-collapse: collapse;
+}
+
+table.flat-table th {
+    background-color: black;
+    color: white;
+    font-family: Whitney-SemiBold, Benton, sans-serif;
+}
+
+table.flat-table tr:hover {
+    background: #eeeeee;
+}
+
+table.flat-table td {
+    color: #555;
+}
+
+table.flat-table th, td {
+    border: 1px solid black;
+    padding: 12px 35px;
+    border-collapse: collapse;
+}
+
+table.flat-table caption {
+    padding: 25px;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-family: Whitney-SemiBold, Benton, sans-serif;
+}
+
+.bu-logo {
+    width: 85px;
+}
+
+#tableContainer {
+    display: flex;
+    justify-content: center;
+    min-height: 300px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+#tableContainer.fade {
+    opacity: 1;
+}
+
+#tableFooter {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+    color: #aaa;
+    font-size: 12px;
+}
+
+#logoFooter {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+    color: #aaa;
+    font-size: 12px;
+    flex: 1;
+}
+
+#loadingIcon {
+    position: fixed;
+    top: 15%;
+    left: 50%;
+}
+
+svg path,
+svg rect {
+    margin: 0 auto 1em;
+    fill: #aaa;
+    display: inline-block;
+    text-align: center;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 12px;
+}
+
+.footer-text-bold {
+    font-weight: bold;
+}
+
+
+
