@@ -70,10 +70,20 @@ class HtmlView {
         return datarows.map(d => this.convertToTableRow(d)).join('')
     }
 
-    async emit(data) {
-        let loader = document.getElementById("loadingIcon").style.display = 'none';
+    init() {
+        document.getElementById('loadingIcon').style.display = 'block';
+    }
 
-        let table = document.getElementById("education");
+    bindLoadTableEventListener(handler) {
+        document.getElementById('loadTableButton').addEventListener('click', handler);
+    }
+
+    async emit(data) {
+        // hide loader icon and load button
+        document.getElementById('loadingIcon').style.display = 'none';
+        document.getElementById('loadTableButton').style.display = 'none';
+
+        let table = document.getElementById('education');
 
         // modify caption
         let caption = table.caption;
@@ -81,22 +91,22 @@ class HtmlView {
 
         // header
         let theader = table
-            .getElementsByTagName("thead")
+            .getElementsByTagName('thead')
             .item(0);
         theader.innerHTML = this.convertToTableHeaders(data.headers);
 
         // body
         let tbody = table
-            .getElementsByTagName("tbody")
+            .getElementsByTagName('tbody')
             .item(0);
         tbody.innerHTML = this.convertToTableRows(data.data);
 
         // footer
-        let tfooter = document.getElementById("tableDataTS");
+        let tfooter = document.getElementById('tableDataTS');
         tfooter.innerText = `Data generated on ${data.lastRequest}`;
 
         // fade-in the table
-        let tcontainer = document.getElementById("tableContainer");
+        let tcontainer = document.getElementById('tableContainer');
         tcontainer.classList.toggle('fade');
     }
 }
@@ -108,6 +118,15 @@ class ConsoleView {
     constructor() {
     }
 
+    bindLoadTableEventListener(handler) {
+        console.log(`binding ${handler} to nothing`);
+    }
+
+    markdownTableHeader(headers) {
+        return [`| ${headers.join(' | ')} |`,
+            `| ${headers.map(h => '-'.repeat(h.length)).join(' | ')} |`];
+    }
+
     /**
      * creates MarkDown table
      *
@@ -115,11 +134,13 @@ class ConsoleView {
      * @returns {string}
      */
     createMarkdownTable(data) {
-        return [
-            `| ${data.headers.join(' | ')} |`,
-            `| ${data.headers.map(h => '-'.repeat(h.length)).join(' | ')} |`,
+        return [...this.markdownTableHeader(data.headers),
             data.data.map(d => `| ${Object.values(d).join(' | ')} |`).join('\n')
         ].join(`\n`);
+    }
+
+    init() {
+        console.log("loading...");
     }
 
     async emit(data) {
@@ -139,10 +160,14 @@ class Controller {
 
         // bind the callback
         this.model.bindGetDataCallback(this.dataFetchCallback);
+
+        // bind the "load table" button
+        this.views.forEach(v => v.bindLoadTableEventListener(() => this.process()));
     }
 
     process() {
         // get the data
+        this.views.forEach(v => v.init());
         this.model.getData();
     }
 
@@ -161,4 +186,3 @@ class Controller {
 
 // entry point
 const app = new Controller(new EducationHistoryModel(), [new HtmlView(), new ConsoleView()]);
-app.process();
