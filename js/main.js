@@ -36,7 +36,7 @@ class EducationHistoryModel {
             })
             .then(data => {
                 this.history = data;
-                this.history.lastRequest = new Date();
+                this.history.lastRequest = new Date().toLocaleTimeString()
 
                 // callback to kick off the view rendering via the controller
                 this.getDataCallback(this.history);
@@ -58,12 +58,28 @@ class HtmlView {
     constructor() {
     }
 
-    convertToTableHeaders(headers) {
-        return '<tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr>';
+    wrapWithElement(el, inner) {
+        return `<${el}>${inner}</${el}>`
     }
 
-    convertToTableRow(datarow) {
-        return '<tr>' + Object.values(datarow).map(d => `<td>${d}</td>`).join('') + '</tr>';
+    hideElement(elementId) {
+        document.getElementById(elementId).style.display = 'none';
+    }
+
+    getFirstChildWithTag(element, tagId) {
+        return element
+            .getElementsByTagName(tagId)
+            .item(0);
+    }
+
+    convertToTableHeaders(headers) {
+        return this.wrapWithElement('tr',
+            headers.map(h => this.wrapWithElement('th', h)).join(''));
+    }
+
+    convertToTableRow(record) {
+        return this.wrapWithElement('tr',
+            Object.values(record).map(d => this.wrapWithElement('td', d)).join(''));
     }
 
     convertToTableRows(datarows) {
@@ -80,8 +96,8 @@ class HtmlView {
 
     async emit(data) {
         // hide loader icon and load button
-        document.getElementById('loadingIcon').style.display = 'none';
-        document.getElementById('loadTableButton').style.display = 'none';
+        this.hideElement('loadingIcon');
+        this.hideElement('loadTableButton');
 
         let table = document.getElementById('education');
 
@@ -90,20 +106,16 @@ class HtmlView {
         caption.innerText = data.title;
 
         // header
-        let theader = table
-            .getElementsByTagName('thead')
-            .item(0);
+        let theader = this.getFirstChildWithTag(table, 'thead');
         theader.innerHTML = this.convertToTableHeaders(data.headers);
 
         // body
-        let tbody = table
-            .getElementsByTagName('tbody')
-            .item(0);
+        let tbody = this.getFirstChildWithTag(table, 'tbody');
         tbody.innerHTML = this.convertToTableRows(data.data);
 
         // footer
         let tfooter = document.getElementById('tableDataTS');
-        tfooter.innerText = `Data generated on ${data.lastRequest}`;
+        tfooter.innerText = `Data generated at ${data.lastRequest}`;
 
         // fade-in the table
         let tcontainer = document.getElementById('tableContainer');

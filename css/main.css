@@ -36,6 +36,8 @@ body {
 }
 
 table.flat-table {
+    margin-left: 100px;
+    margin-right: 100px;
     border-collapse: collapse;
 }
 
@@ -55,7 +57,7 @@ table.flat-table td {
 
 table.flat-table th, td {
     border: 1px solid black;
-    padding: 12px 35px;
+    padding: 12px 12px;
     border-collapse: collapse;
 }
 
@@ -72,11 +74,13 @@ table.flat-table caption {
 }
 
 #tableContainer {
+    padding: 5px;
     display: flex;
     justify-content: center;
     min-height: 300px;
     opacity: 0;
     transition: opacity 1s;
+    overflow: scroll;
 }
 
 #tableContainer.fade {
