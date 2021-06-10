@@ -106,14 +106,13 @@ table.flat-table caption {
 
 #loadTableButton {
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     box-sizing: border-box;
     font: inherit;
     margin: 0;
     overflow: visible;
     text-transform: none;
     -webkit-appearance: button;
-    font-family: inherit;
     display: inline-block;
     font-weight: 400;
     text-align: center;
@@ -122,7 +121,6 @@ table.flat-table caption {
     touch-action: manipulation;
     cursor: pointer;
     background-image: none;
-    border: 1px solid transparent;
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
@@ -131,7 +129,7 @@ table.flat-table caption {
     text-decoration: none;
     color: #333;
     background-color: white;
-    border-color: #adadad;
+    border: 1px solid #adadad;
 
     top: 15%;
     position: absolute;
@@ -168,5 +166,19 @@ svg rect {
     font-family: Whitney-SemiBold, Benton, sans-serif;
 }
 
+.footer-text {
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+}
 
-
+#mutedLoadingText {
+    display: none;
+    top: 30%;
+    position: absolute;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    color: #aaa;
+    font-size: 14px;
+}
