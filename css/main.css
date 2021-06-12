@@ -139,6 +139,10 @@ table.flat-table caption {
     transform: translate(-50%, -50%);
 }
 
+#loadTableButton:hover {
+    background-color: #e6e6e6;
+}
+
 #loadingIcon {
     display: none;
     top: 25%;
